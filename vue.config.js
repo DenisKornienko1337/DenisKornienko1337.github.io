@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/package-searcher/',
+  publicPath: 'DenisKornienko1337.github.io',
 };
