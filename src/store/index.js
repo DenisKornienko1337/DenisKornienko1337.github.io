@@ -26,7 +26,6 @@ export default new Vuex.Store({
       state.page = page;
     },
     SET_QUERY(state, query) {
-      console.log('set query', query);
       state.query = query;
     },
     CLEAR(state) {
