@@ -77,7 +77,6 @@ export default {
       this.$router.push(`/?query=${this.query}&page=${this.page}`);
     },
     async leaf(num) {
-      console.log(this.page, num);
       this.page = Number(this.page) + Number(num);
       await this.$store.dispatch('search', {
         page: this.page,

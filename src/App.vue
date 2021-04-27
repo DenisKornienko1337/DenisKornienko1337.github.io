@@ -13,7 +13,7 @@ export default {
     layout,
   },
   mounted() {
-    if (this.$route.path !== '/') {
+    if (JSON.stringify(this.$route.query) !== '{}') {
       this.$router.push('/');
     }
   },

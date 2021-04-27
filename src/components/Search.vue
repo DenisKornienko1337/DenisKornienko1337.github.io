@@ -27,7 +27,7 @@ export default {
     async search() {
       if (!this.query.trim()) {
         this.$store.commit('CLEAR');
-        this.$router.push('/');
+        if (JSON.stringify(this.$route.query) !== '{}') this.$router.push('/');
         return;
       }
       await this.$store.dispatch('search', {

@@ -158,7 +158,7 @@ export default {
     }
     &--header {
       &__title {
-        font-size: 32px;
+        font-size: 24px;
         position: relative;
         div {
           position: absolute;

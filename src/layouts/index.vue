@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div :class="isPopup ? 'layout o-hidden': 'layout'">
     <detailed-popup v-if="isPopup" :curPackage="curPackage" />
     <top-title />
     <search />
@@ -51,6 +51,9 @@ export default {
 
 <style lang="scss" scoped>
 .layout {
+  &.o-hidden {
+    overflow: hidden;
+  }
   height: 100%;
   padding: 15px;
   position: relative;
