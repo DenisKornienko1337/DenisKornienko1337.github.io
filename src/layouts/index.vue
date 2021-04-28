@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// eslint-disable
 import TopTitle from '@/components/Title';
 import Search from '@/components/Search';
 import MainTable from '@/components/Table';
@@ -54,8 +53,9 @@ export default {
   &.o-hidden {
     overflow: hidden;
   }
-  height: 100%;
   padding: 15px;
+  min-height: 100vh;
   position: relative;
+  margin-bottom: 20px;
 }
 </style>
