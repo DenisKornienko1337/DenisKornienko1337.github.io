@@ -17,9 +17,11 @@ export default {
 .footer {
   padding: 15px;
   background-color: #000;
-  width: 100%;
-  position: relative;
+  width: 100vw;
   z-index: 1;
   color: #fff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 </style>

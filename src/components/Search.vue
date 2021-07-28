@@ -4,13 +4,15 @@
       type="text"
       class="form-control"
       placeholder="Type here..."
-      v-model="query"
+      v-model.trim="query"
       @input="search"
     >
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Search',
   data() {
@@ -18,22 +20,30 @@ export default {
       query: '',
     };
   },
-  computed: {
-    page() {
-      return this.$store.page;
-    },
+  computed: mapState([
+    'page',
+  ]),
+
+  async mounted() {
+    const { query, page } = this.$route.query;
+    if (query && page) {
+      this.query = query;
+      this.$store.commit('SET_QUERY', query);
+      this.$store.commit('SET_PAGE', Number(page));
+      this.$store.dispatch('search');
+    }
   },
+
   methods: {
     async search() {
-      if (!this.query.trim()) {
+      this.$store.commit('SET_QUERY', this.query);
+      this.$store.commit('SET_PAGE', 1);
+      if (this.query.length < 1) {
         this.$store.commit('CLEAR');
-        if (JSON.stringify(this.$route.query) !== '{}') this.$router.push('/');
+        this.$router.push('/');
         return;
       }
-      await this.$store.dispatch('search', {
-        query: this.query.trim(),
-        page: 1,
-      });
+      this.$store.dispatch('search');
       this.$router.push(`/?query=${this.query}&page=1`);
     },
   },

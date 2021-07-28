@@ -2,13 +2,13 @@
   <div v-if="results.length" class="pagination d-flex">
     <div class="pagination-goto">
       <div>
-        Page: {{curPage}}/{{total}}
+        Page: {{page}}/{{total}}
       </div>
       <div>
         Go to
         <input
           type="number"
-          v-model="page"
+          v-model.trim="curPage"
           @keyup.enter="paginate"
         >
         <button
@@ -24,9 +24,9 @@
       <div class="pagination-classic-prev">
         <button
           type="button"
-          :class="curPage==1 ? 'btn btn-secondary': 'btn btn-primary'"
-          :disabled="curPage==1"
-          @click="leaf(-1)"
+          :class="page == 1 ? 'btn btn-secondary': 'btn btn-primary'"
+          :disabled="page == 1"
+          @click="prev"
         >
           Prev
         </button>
@@ -34,9 +34,9 @@
       <div class="pagination-classic-next">
         <button
           type="button"
-          :class="curPage==total ? 'btn btn-secondary': 'btn btn-primary'"
-          :disabled="curPage==total"
-          @click="leaf(1)"
+          :class="page == total ? 'btn btn-secondary': 'btn btn-primary'"
+          :disabled="page == total"
+          @click="next"
         >
           Next
         </button>
@@ -46,43 +46,47 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Pagination',
+
   data() {
     return {
-      page: 1,
+      curPage: 1,
     };
   },
-  computed: {
-    results() {
-      return this.$store.state.results;
-    },
-    total() {
-      return this.$store.state.total;
-    },
-    curPage() {
-      return this.$store.state.page;
-    },
-    query() {
-      return this.$store.state.query;
-    },
+
+  computed: mapState([
+    'results',
+    'total',
+    'page',
+    'query',
+  ]),
+
+  mounted() {
+    this.curPage = this.page;
   },
+
   methods: {
     async paginate() {
-      if (this.page < 1) this.page = 1;
-      if (this.page > this.total) this.page = this.total;
-      await this.$store.dispatch('search', {
-        page: this.page,
-      });
-      this.$router.push(`/?query=${this.query}&page=${this.page}`);
+      if (this.curPage < 1) this.curPage = 1;
+      if (this.curPage > this.total) this.curPage = this.total;
+      this.$store.commit('SET_PAGE', this.curPage);
+      this.$store.dispatch('search');
+      this.$router.push(`/?query=${this.query}&page=${this.curPage}`);
     },
-    async leaf(num) {
-      this.page = Number(this.page) + Number(num);
-      await this.$store.dispatch('search', {
-        page: this.page,
-      });
-      this.$router.push(`/?query=${this.query}&page=${this.page}`);
+
+    prev() {
+      this.curPage -= 1;
+      this.paginate();
     },
+
+    next() {
+      this.curPage += 1;
+      this.paginate();
+    },
+
   },
 };
 </script>

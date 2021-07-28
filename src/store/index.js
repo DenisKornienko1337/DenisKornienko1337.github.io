@@ -8,6 +8,7 @@ const stateInit = {
   results: [],
   total: 0,
   page: 1,
+  perPage: 10,
 };
 
 export default new Vuex.Store({
@@ -29,26 +30,18 @@ export default new Vuex.Store({
       state.query = query;
     },
     CLEAR(state) {
-      state.query = stateInit.query;
-      state.results = stateInit.results;
-      state.total = stateInit.total;
-      state.page = stateInit.page;
+      Vue.set(state, stateInit);
     },
   },
   actions: {
-    async search({ commit, state }, params) {
-      if (params.query) commit('SET_QUERY', params.query);
-      if (params.page) commit('SET_PAGE', params.page);
+    async search({ commit, state }) {
       try {
-        /* eslint no-underscore-dangle: 0 */
-        const from = (state.page - 1) * this._vm.$perPage;
-        const response = await this._vm.$axios.get(`/search?q=${state.query}&size=${this._vm.$perPage}&from=${from}`);
+        const from = (state.page - 1) * this.state.perPage;
+        const response = await this.$axios.get(`/search?q=${state.query}&size=${this.state.perPage}&from=${from}`);
         commit('SET_RESULTS', response.data);
       } catch (err) {
         console.log(err);
       }
     },
-  },
-  modules: {
   },
 });

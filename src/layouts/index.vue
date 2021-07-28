@@ -3,8 +3,9 @@
     <detailed-popup v-if="isPopup" :curPackage="curPackage" />
     <top-title />
     <search />
-    <main-table />
-    <pagination />
+    <main-table v-if="query" />
+    <pagination v-if="query" />
+    <custom-footer />
   </div>
 </template>
 
@@ -14,8 +15,11 @@ import Search from '@/components/Search';
 import MainTable from '@/components/Table';
 import Pagination from '@/components/Pagination';
 import DetailedPopup from '@/components/DetailedPopup';
+import CustomFooter from '@/components/Footer';
 
 import eventBus from '@/main';
+
+import { mapState } from 'vuex';
 
 export default {
   name: 'BaseLayout',
@@ -31,7 +35,13 @@ export default {
     MainTable,
     Pagination,
     DetailedPopup,
+    CustomFooter,
   },
+
+  computed: mapState([
+    'query',
+  ]),
+
   methods: {
     setPopup(item) {
       this.curPackage = item;
@@ -41,6 +51,7 @@ export default {
       this.isPopup = false;
     },
   },
+
   mounted() {
     eventBus.$on('setPopup', this.setPopup);
     eventBus.$on('closePopup', this.closePopup);

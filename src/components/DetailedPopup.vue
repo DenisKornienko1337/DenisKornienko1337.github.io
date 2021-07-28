@@ -14,18 +14,21 @@
       </div>
       <div class="detailed-popup--body">
         <div class="detailed-popup--body__version">
-          <span>Version:</span>
+          <span class="font-weight-bold">Version:</span>
           {{curPackage.version}}
         </div>
         <div class="detailed-popup--body__description">
           {{curPackage.description}}
         </div>
-        <div class="detailed-popup--body__keywords">
-          <span>Keywords:</span>
+        <div
+          v-if="keywords.length"
+          class="detailed-popup--body__keywords"
+        >
+          <span class="font-weight-bold">Keywords:</span>
           {{keywords}}
         </div>
         <div class="detailed-popup--body__last">
-          <span>Last publish:</span>
+          <span class="font-weight-bold">Last publish:</span>
           {{curPackage.date | parseDate}}
         </div>
         <div class="detailed-popup--body__links">
@@ -169,7 +172,7 @@ export default {
           color: #fff;
         }
       }
-      border-bottom: 2px solid #000;
+      border-bottom: 1px solid gray;
     }
   }
   position: absolute;

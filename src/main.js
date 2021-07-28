@@ -12,7 +12,7 @@ const baseAxios = axios.create({
 });
 
 Vue.prototype.$axios = baseAxios;
-Vue.prototype.$perPage = 10;
+store.$axios = baseAxios;
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;

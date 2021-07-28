@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <h1>Search for package</h1>
+    <h1>Search for packages</h1>
   </div>
 </template>
 

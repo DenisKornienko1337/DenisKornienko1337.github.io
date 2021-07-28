@@ -1,24 +1,18 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+  >
     <layout />
-    <custom-footer />
   </div>
 </template>
 
 <script>
 import layout from '@/layouts';
-import CustomFooter from '@/components/Footer';
 
 export default {
   name: 'App',
   components: {
     layout,
-    CustomFooter,
-  },
-  mounted() {
-    if (JSON.stringify(this.$route.query) !== '{}') {
-      this.$router.push('/');
-    }
   },
 };
 </script>
